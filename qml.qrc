@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/ImageList.qml</file>
+        <file>qml/ImageItem.qml</file>
+        <file>qml/TStyleItem.qml</file>
+        <file>qml/Style.qml</file>
+        <file>qml/TLabel.qml</file>
+        <file>qml/TStyleFont.qml</file>
+        <file>qml/TLine.qml</file>
+        <file>qml/qmldir</file>
+        <file>qml/THline.qml</file>
+    </qresource>
+</RCC>
