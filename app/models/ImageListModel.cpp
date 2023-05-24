@@ -70,21 +70,13 @@ void ImageListModel::slotStatusEncodeChanged( int status,QString const& filePath
     int slPos = filePath.lastIndexOf( "/" );
     QString name = filePath.mid( slPos + 1 );
     assert( name2Index_.count( name ) );
-    auto pItem = item( name2Index_[ name ] );
-
-    switch( status ){
-    case ENCODING:
-    case DECODING:
-    case NONE:
-    {
-        pItem->setData( status, itemStatus);
-    }
-        break;
-    default:
-        qDebug() << "Received" << status << "for " << filePath << " encode";
-        pItem->setData( NONE, itemStatus);
-        // emit error
-    }
+    int idx = name2Index_[ name ];
+    auto apItem = QStandardItemModel::item( idx );
+    auto *pItem = new QStandardItem();
+    pItem->setData( apItem->data( itemName ), itemName );
+    pItem->setData(apItem->data( itemSize ), itemSize );
+    pItem->setData(status, itemStatus);
+    QStandardItemModel::setItem(idx, pItem);
 
     if( status == NONE || status == ERROR )
         name2Index_.remove( name );
@@ -95,21 +87,13 @@ void ImageListModel::slotStatusDecodeChanged( int status,QString const& filePath
     int slPos = filePath.lastIndexOf( "/" );
     QString name = filePath.mid( slPos + 1 );
     assert( name2Index_.count( name ) );
-    auto pItem = item( name2Index_[ name ] );
-
-    switch( status ){
-    case ENCODING:
-    case DECODING:
-    case NONE:
-    {
-        pItem->setData( status, itemStatus);
-    }
-    break;
-    default:
-        qDebug() << "Received" << status << "for " << filePath << " decode";
-        pItem->setData( NONE, itemStatus);
-        // emit error
-    }
+    int idx = name2Index_[ name ];
+    auto apItem = QStandardItemModel::item( idx );
+    auto *pItem = new QStandardItem();
+    pItem->setData( apItem->data( itemName ), itemName );
+    pItem->setData(apItem->data( itemSize ), itemSize );
+    pItem->setData(status, itemStatus);
+    QStandardItemModel::setItem(idx, pItem);
 
     if( status == NONE || status == ERROR )
         name2Index_.remove( name );

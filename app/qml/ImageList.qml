@@ -6,7 +6,7 @@ Item {
     clip: true
 
     property alias imageListModel: lv.model
-    property var statusStrings: [ "encoding", "decoding", "" ]
+    property var statusStrings: [ "encoding", "decoding", "none", "error" ]
 
     signal signalItemSelected(int idx)
 
@@ -17,7 +17,7 @@ Item {
             id: itemId
             fileName:  itemName
             size:  itemSize
-            status: itemStatus
+            status: statusStrings[itemStatus]
             width: parent.width
 
             styleItem:              Style.itemSettingB
