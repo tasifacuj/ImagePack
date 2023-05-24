@@ -4,5 +4,5 @@
 struct ImageItem{
     QString name;
     int size;
-    QString status;
+    int status;
 };

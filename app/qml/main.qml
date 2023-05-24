@@ -32,7 +32,7 @@ Window {
         imageListModel: cppImgModel
 
         onSignalItemSelected: {
-            console.log( ">>> selected item" + idx )
+            cppImgModel.handleClick( idx );
         }
     }
 

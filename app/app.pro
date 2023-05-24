@@ -26,6 +26,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ImageListObserver.hpp \
+    models/AppImageTraverser.hpp \
     models/ImageItem.hpp \
     models/ImageListModel.hpp
 
