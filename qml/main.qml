@@ -29,7 +29,7 @@ Window {
         height: parent.height
         anchors.top: parent.top
 
-        imageListModel: testModel
+        imageListModel: cppImgModel
 
         onSignalItemSelected: {
             console.log( ">>> selected item" + idx )
@@ -39,17 +39,17 @@ Window {
     ListModel{
           id: testModel
           ListElement {
-              itemPath: "file1.bmp";
+              itemName: "file1.bmp";
               itemSize: "200[b]"
               itemStatus: "none"
           }
           ListElement {
-              itemPath: "file2.bmp";
+              itemName: "file2.bmp";
               itemSize: "201[b]"
               itemStatus: "none"
           }
           ListElement {
-              itemPath: "file3.bmp";
+              itemName: "file3.bmp";
               itemSize: "202[b]"
               itemStatus: "converting"
           }

@@ -5,7 +5,7 @@ Rectangle {
     id: root
 
     property bool isPressed:false
-    property alias path: pathLabel.text
+    property alias fileName: nameLabel.text
     property alias size: sizeLabel.text
     property alias status: statusLabel.text
 
@@ -23,7 +23,7 @@ Rectangle {
 
 
     width: Math.max(styleItemCurrent.width, parent.width)
-    height: visible ? Math.max(styleItemCurrent.height, pathLabel.height+styleItem.spacing) : 0
+    height: visible ? Math.max(styleItemCurrent.height, nameLabel.height+styleItem.spacing) : 0
 
     color: styleItemCurrent.bgColor1
     radius: styleItemCurrent.radius
@@ -40,7 +40,7 @@ Rectangle {
             anchors.leftMargin:  40
 
             TLabel{
-                id: pathLabel
+                id: nameLabel
                 anchors.verticalCenter: parent.verticalCenter
                 styleFont: styleItemCaption.fonts[0]
             }

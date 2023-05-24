@@ -14,7 +14,7 @@ Item {
 
         ImageItem{
             id: itemId
-            path:  itemPath
+            fileName:  itemName
             size:  itemSize
             status: itemStatus
             width: parent.width
@@ -24,7 +24,7 @@ Item {
             styleItemCaption:       Style.itemSettingCaptionB
 
             onSignalClicked: {
-                console.log( "{" + path + ": " + size + "[b], status: " + status  )
+                console.log( "{" + fileName + ": " + size + "[b], status: " + status  )
                 root.signalItemSelected( index )
             }
         }
