@@ -4,23 +4,25 @@
 ImageListModel::ImageListModel(const QString &imageDir, QObject *parent)
     : QStandardItemModel( parent )
     , imageDir_( imageDir ){
+    if( !imageDir_.endsWith( '/' ) )
+        imageDir_.append( '/' );
+
     QHash<int, QByteArray> names;
     names[itemName] = "itemName";
-    name2Role_[ "itemName" ] = itemName;
     names[itemSize] = "itemSize";
-    name2Role_[ "itemSize" ] = itemSize;
     names[itemStatus] = "itemStatus";
-    name2Role_[ "itemStatus" ] = itemStatus;
     setItemRoleNames(names);
 
     qDebug() << "--------------";
     connect( &imageObserver_, &ImageListObserver::signalImageListRefreshed, this, &ImageListModel::setItems);
     imageObserver_.slotAddPath( imageDir );
+    appImgTraverser_.moveToThread( &thrd_ );
+    thrd_.start();
 
-    appImgTraverser_.moveToThread( &thrd );
-    connect( this, &ImageListModel::signalEncode, &appImgTraverser_, AppImageTraverser::slotEncode, Qt::QueuedConnection );
-    connect( this, &ImageListModel::signalDecode, &appImgTraverser_, AppImageTraverser::slotDecode, Qt::QueuedConnection );
-    connect( &appImgTraverser_, &AppImageTraverser::signalStatusChanged, this, &ImageListModel::slotStatusChanged, Qt::QueuedConnection );
+    connect( this, &ImageListModel::signalEncode, &appImgTraverser_, &AppImageTraverser::slotEncode, Qt::QueuedConnection );
+    connect( this, &ImageListModel::signalDecode, &appImgTraverser_, &AppImageTraverser::slotDecode, Qt::QueuedConnection );
+    connect( &appImgTraverser_, &AppImageTraverser::signalStatusEncodeChanged, this, &ImageListModel::slotStatusEncodeChanged, Qt::QueuedConnection );
+    connect( &appImgTraverser_, &AppImageTraverser::signalStatusDecodeChanged, this, &ImageListModel::slotStatusDecodeChanged, Qt::QueuedConnection );
 }
 
 void ImageListModel::clear(){
@@ -52,9 +54,10 @@ static QStringRef encoding( QString const& source ) {
 void ImageListModel::handleClick( int idx ){
     qDebug() << "handle" << idx;
     auto pItem = item( idx );
-    Qstring name = pItem->data( itemName ).toString();
+    QString name = pItem->data( itemName ).toString();
     QStringRef enc = encoding( name );
     QString fullPath = imageDir_ + name;
+    name2Index_[ name ] = idx;
 
     if( enc == "bmp" || enc == "png" ){
         emit signalEncode( fullPath );
@@ -63,20 +66,51 @@ void ImageListModel::handleClick( int idx ){
     }
 }
 
-void ImageListModel::slotStatusChanged( int status,QString const& oldFilePath,  QString const& newFilePath ){
+void ImageListModel::slotStatusEncodeChanged( int status,QString const& filePath ){
+    int slPos = filePath.lastIndexOf( "/" );
+    QString name = filePath.mid( slPos + 1 );
+    assert( name2Index_.count( name ) );
+    auto pItem = item( name2Index_[ name ] );
+
     switch( status ){
     case ENCODING:
     case DECODING:
     case NONE:
     {
-        int slPos = oldFilePath.lastIndexOf( "/" );
-        QStringRef name = oldFilePath.midRef( slPos + 1 );
-        assert( name2Role_.count( name ) );
-        auto pItem = item( name2Role_[ name ] );
         pItem->setData( status, itemStatus);
     }
         break;
     default:
-        qDebug() << "Received" << status << "for {" << oldFilePath << "," << newFilePath << "}";
+        qDebug() << "Received" << status << "for " << filePath << " encode";
+        pItem->setData( NONE, itemStatus);
         // emit error
+    }
+
+    if( status == NONE || status == ERROR )
+        name2Index_.remove( name );
+}
+
+
+void ImageListModel::slotStatusDecodeChanged( int status,QString const& filePath ){
+    int slPos = filePath.lastIndexOf( "/" );
+    QString name = filePath.mid( slPos + 1 );
+    assert( name2Index_.count( name ) );
+    auto pItem = item( name2Index_[ name ] );
+
+    switch( status ){
+    case ENCODING:
+    case DECODING:
+    case NONE:
+    {
+        pItem->setData( status, itemStatus);
+    }
+    break;
+    default:
+        qDebug() << "Received" << status << "for " << filePath << " decode";
+        pItem->setData( NONE, itemStatus);
+        // emit error
+    }
+
+    if( status == NONE || status == ERROR )
+        name2Index_.remove( name );
 }

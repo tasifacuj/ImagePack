@@ -23,7 +23,7 @@ void ImageListObserver::slotRefresh(){
     for (auto const& path: watcher_->directories()) {
         QDir curDir( path );
         for ( const QFileInfo& fileInfo : curDir.entryInfoList({"*.png", "*.bmp", "*.barch"}) )
-            list.append( ImageItem{fileInfo.fileName(), fileInfo.size(), "none"} );
+            list.append( ImageItem{fileInfo.fileName(), fileInfo.size(), 2} );
     }
 
     emit signalImageListRefreshed(list, QPrivateSignal());

@@ -12,10 +12,10 @@ public:// == TYPES ==
     static constexpr int ERROR = 3;
 
 public:
-    AppImageTraverser( QObject* parent = nullptr );
+    AppImageTraverser( QObject* parent = nullptr ) : QObject( parent ){}
 signals:
-    void signalStatusChanged( int status, QString const& oldfilePath , QString const& newfilePath );
-
+    void signalStatusEncodeChanged( int status, QString const& filePath );
+    void signalStatusDecodeChanged( int status, QString const& filePath );
 public slots:
     void slotEncode( QString const& filePath );
     void slotDecode( QString const& filePath );

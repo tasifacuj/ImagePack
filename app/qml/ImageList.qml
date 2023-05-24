@@ -17,7 +17,7 @@ Item {
             id: itemId
             fileName:  itemName
             size:  itemSize
-            status: root.statusStrings[ itemStatus ]
+            status: itemStatus
             width: parent.width
 
             styleItem:              Style.itemSettingB

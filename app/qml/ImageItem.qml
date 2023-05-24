@@ -9,6 +9,10 @@ Rectangle {
     property alias size: sizeLabel.text
     property alias status: statusLabel.text
 
+    onStateChanged: {
+        console.log( "Status changed to" + status );
+    }
+
 
     property TStyleItem styleItem: Style.itemSettingB
     property TStyleItem styleItemPressed: Style.itemSettingBPressed

@@ -9,6 +9,7 @@ TARGET = ImagePack
 SOURCES += \
         ImageListObserver.cpp \
         main.cpp \
+        models/AppImageTraverser.cpp \
         models/ImageListModel.cpp
 
 RESOURCES += qml.qrc
@@ -31,3 +32,6 @@ HEADERS += \
     models/ImageListModel.hpp
 
 LIBS += -L$$OUT_PWD/../3rdParty/img_traverse/src -limg_traverse
+
+
+INCLUDEPATH += $$PWD/../3rdParty/img_traverse/src

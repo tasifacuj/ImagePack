@@ -14,7 +14,7 @@ class ImageListModel : public QStandardItemModel{
   Q_OBJECT
 
 private:// == members ==
-    QHash< QString, int > name2Role_;
+    QHash< QString, int > name2Index_;
     QString imageDir_;
     ImageListObserver   imageObserver_;
     QThread             thrd_;
@@ -46,5 +46,6 @@ public:
     Q_INVOKABLE void handleClick( int idx );
 
 private slots:
-    void slotStatusChanged(int status, const QString &oldFilePath, QString const& newFilePath );
+    void slotStatusEncodeChanged(int status, const QString& filePath);
+    void slotStatusDecodeChanged(int status, const QString& filePath);
 };
