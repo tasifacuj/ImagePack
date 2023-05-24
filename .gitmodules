@@ -1,0 +1,3 @@
+[submodule "3rdParty/img_traverse"]
+	path = 3rdParty/img_traverse
+	url = https://github.com/tasifacuj/img_traverse.git
