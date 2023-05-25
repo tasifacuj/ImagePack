@@ -12,11 +12,10 @@ Item {
     property bool isPressed
     property string action: ""
 
-    signal signalClicked(string aKey)
+    signal signalClicked()
     signal signalPressed()
     signal signalReleased()
     signal signalLongPress(string aKey)
-    signal signalUIAction(string name, variant value)
 
     height: styleItem.height
     width:  styleItem.width
@@ -41,13 +40,7 @@ Item {
          onPressed: {root.signalPressed();isPressed = true}
          onReleased: {root.signalReleased();isPressed = false}
          onClicked:{
-            root.signalClicked(root.key==="" ? root.caption : root.key)
-            if(root.action != "")
-                root.signalUIAction( root.action, root.key )
-        }
-
-         onPressAndHold: {
-                root.signalLongPress(root.key==="" ? root.caption : root.key)
+            root.signalClicked()
         }
     }
 

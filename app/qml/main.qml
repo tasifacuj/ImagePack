@@ -47,11 +47,26 @@ Window {
         anchors.leftMargin: 0
         styleItem: Style.buttonRed
         styleItemPressed: Style.buttonRedPressed
+        caption: qsTr("Show warning")
         onSignalClicked: {
-            console.log( "button clicked" );
+            warningMessage.visible = true;
+        }
+    }
+
+    TMessage{
+        id: warningMessage
+        visible: false
+        anchors.fill: parent
+        caption: "Warning"
+        text:   "Shit happened"
+
+
+        onSignalClicked: {
+            console.log( "msg clicked" );
+            visible = false;
         }
 
-        caption: qsTr("Apply")
+
     }
 
     ListModel{

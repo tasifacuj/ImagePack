@@ -11,5 +11,6 @@
         <file>qml/qmldir</file>
         <file>qml/THline.qml</file>
         <file>qml/TButton.qml</file>
+        <file>qml/TMessage.qml</file>
     </qresource>
 </RCC>
