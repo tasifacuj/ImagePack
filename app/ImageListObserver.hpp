@@ -5,6 +5,10 @@
 //project
 #include "models/ImageItem.hpp"
 
+/*
+ * @brief monitors provided directory for the chages
+ * Current implementation is bad, because it does not wait for file close on write, inotify wanted.
+*/
 class ImageListObserver : public QObject {
     Q_OBJECT
 
