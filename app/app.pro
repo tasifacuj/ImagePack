@@ -35,3 +35,20 @@ LIBS += -L$$OUT_PWD/../3rdParty/img_traverse/src -limg_traverse
 
 
 INCLUDEPATH += $$PWD/../3rdParty/img_traverse/src
+
+DISTFILES += \
+     $$PWD/../etc/test-image-2-gs.bmp
+
+
+defineTest(copyToDestDir) {
+    files = $$1
+    dir = $$2
+
+    for(file, files) {
+        QMAKE_POST_LINK += $$QMAKE_COPY -r $$shell_quote($$file) $$shell_quote($$dir) $$escape_expand(\\n\\t)
+    }
+
+    export(QMAKE_POST_LINK)
+}
+
+copyToDestDir($$DISTFILES, $$OUT_PWD)

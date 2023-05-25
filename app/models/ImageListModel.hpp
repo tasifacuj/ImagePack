@@ -37,7 +37,7 @@ public:// == CTOR ==
 signals:
     void signalEncode( QString const& filePath );
     void signalDecode( QString const& filePath );
-    void signalImagePackWarn( QStrign const& warn );
+    void signalImagePackWarn( QVariant warn );
 
 public:
     void addItem(const ImageItem& aItem);

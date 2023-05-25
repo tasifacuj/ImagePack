@@ -1,6 +1,13 @@
 #include "ImageListModel.hpp"
 #include <QDebug>
 
+static const QString errdescription[] = {
+    "ENCODING",
+    "DECODING",
+    "NONE",
+    "ERROR"
+};
+
 ImageListModel::ImageListModel(const QString &imageDir, QObject *parent)
     : QStandardItemModel( parent )
     , imageDir_( imageDir ){
@@ -75,6 +82,7 @@ void ImageListModel::slotStatusEncodeChanged( int status,QString const& filePath
     auto *pItem = new QStandardItem();
     pItem->setData( apItem->data( itemName ), itemName );
     pItem->setData(apItem->data( itemSize ), itemSize );
+    qDebug() << "Set new status" << errdescription[ status ] << "for" << name;
     pItem->setData(status, itemStatus);
     QStandardItemModel::setItem(idx, pItem);
 
@@ -95,6 +103,7 @@ void ImageListModel::slotStatusDecodeChanged( int status,QString const& filePath
     auto *pItem = new QStandardItem();
     pItem->setData( apItem->data( itemName ), itemName );
     pItem->setData(apItem->data( itemSize ), itemSize );
+    qDebug() << "Set new status" << errdescription[ status ] << "for" << name;
     pItem->setData(status, itemStatus);
     QStandardItemModel::setItem(idx, pItem);
 

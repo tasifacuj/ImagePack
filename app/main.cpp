@@ -43,9 +43,14 @@ int main(int argc, char *argv[]){
     // construct image model
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
+
+
     ImageListModel imgModel( imageDir );
-    QQuickWindow* pQuickWindow = qobject_cast<QQuickWindow*>(engine.rootObjects().value(0));
-    QObject::connect( &imgModel, SIGNAL( signalImagePackWarn( QString ) ), pQuickWindow ,SLOT( slotShowWarn(QString) ) );
+
+    QObject::connect( &engine, &QQmlApplicationEngine::objectCreated, [ &engine, &imgModel ](){
+        QQuickWindow* pQuickWindow = qobject_cast<QQuickWindow*>(engine.rootObjects().value(0));
+        QObject::connect( &imgModel, SIGNAL( signalImagePackWarn( QVariant ) ), pQuickWindow ,SLOT( slotShowWarn(QVariant) ) );
+    });
 
     // load qml
     engine.rootContext()->setContextProperty( "cppImgModel", &imgModel);
@@ -55,6 +60,8 @@ int main(int argc, char *argv[]){
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
     engine.load(url);
+
+
 
     return app.exec();
 }
