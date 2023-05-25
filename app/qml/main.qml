@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import "."
 Window {
-    width: 640
+    width: 640 * 2
     height: 480
     visible: true
     title: qsTr("Hello World")
@@ -25,15 +25,33 @@ Window {
 //    }
 
     ImageList{
+        id: images
         width: parent.width
-        height: parent.height
+//        height: 400
         anchors.top: parent.top
+        anchors.left:  parent.left
 
         imageListModel: cppImgModel
 
         onSignalItemSelected: {
             cppImgModel.handleClick( idx );
         }
+    }
+
+    TButton{
+        enabled: true
+//        anchors.top: images.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        styleItem: Style.buttonRed
+        styleItemPressed: Style.buttonRedPressed
+        onSignalClicked: {
+            console.log( "button clicked" );
+        }
+
+        caption: qsTr("Apply")
     }
 
     ListModel{
