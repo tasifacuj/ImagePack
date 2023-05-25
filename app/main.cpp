@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QCommandLineParser>
+#include <QQuickWindow>
 
 #include "models/ImageListModel.hpp"
 
@@ -35,21 +36,21 @@ int main(int argc, char *argv[]){
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-
+    // parse command line
     QString imageDir = parse_command_line( argc, argv );
     qDebug() << "img dir:" << imageDir;
+
+    // construct image model
     QGuiApplication app(argc, argv);
-    ImageListModel imgModel( imageDir );
-//    imgModel.addItem( { "file1.bmp", 200, "none" } );
-//    imgModel.addItem( { "file2.bmp", 202, "none" } );
-//    imgModel.addItem( { "file3.bmp", 203, "converting" } );
-
-
     QQmlApplicationEngine engine;
+    ImageListModel imgModel( imageDir );
+    QQuickWindow* pQuickWindow = qobject_cast<QQuickWindow*>(engine.rootObjects().value(0));
+    QObject::connect( &imgModel, SIGNAL( signalImagePackWarn( QString ) ), pQuickWindow ,SLOT( slotShowWarn(QString) ) );
+
+    // load qml
     engine.rootContext()->setContextProperty( "cppImgModel", &imgModel);
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-        &app, [url](QObject *obj, const QUrl &objUrl) {
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject *obj, const QUrl &objUrl) {
             if (!obj && url == objUrl)
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);

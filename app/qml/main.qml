@@ -8,21 +8,11 @@ Window {
     title: qsTr("Hello World")
     color: Style.clBlue2
 
-//    ImageItem{
-//        id: testItem
-//        path: "somefile.bmp"
-//        size: "2000[B]"
-//        status: "none"
-//        width: parent.width
-//        styleItem:              Style.itemSettingB
-//        styleItemPressed:       Style.itemSettingBPressed
-//        styleItemCaption:       Style.itemSettingCaptionB
-//        anchors.centerIn: parent
-
-//        onSignalClicked: {
-//            console.log( path, ", ", size, " clicked" )
-//        }
-//    }
+    function slotShowWarn( warnMsg ){
+        warningMessage.caption = "Warning";
+        warningMessage.text = warnMsg;
+        warningMessage.visible = true;
+    }
 
     ImageList{
         id: images
@@ -39,8 +29,8 @@ Window {
     }
 
     TButton{
+        visible: false
         enabled: true
-//        anchors.top: images.bottom
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.bottomMargin: 0

@@ -80,6 +80,9 @@ void ImageListModel::slotStatusEncodeChanged( int status,QString const& filePath
 
     if( status == NONE || status == ERROR )
         name2Index_.remove( name );
+
+    if( status == ERROR )
+        emit signalImagePackWarn( "Failed to encode " + name );
 }
 
 
@@ -97,4 +100,7 @@ void ImageListModel::slotStatusDecodeChanged( int status,QString const& filePath
 
     if( status == NONE || status == ERROR )
         name2Index_.remove( name );
+
+    if( status == ERROR )
+        emit signalImagePackWarn( "Failed to decode " + name );
 }
