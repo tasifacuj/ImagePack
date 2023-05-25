@@ -22,5 +22,5 @@ public slots:
     void slotAddPath(QString const& aPath);
 
 private:
-    QFileSystemWatcher *watcher_;
+    QFileSystemWatcher *watcher_;//!< FXIME: use inotify instead!!!
 };
