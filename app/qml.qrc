@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qml/ImageList.qml</file>
+        <file>qml/TImageList.qml</file>
         <file>qml/ImageItem.qml</file>
         <file>qml/TStyleItem.qml</file>
         <file>qml/Style.qml</file>

@@ -3,6 +3,7 @@ import QtQuick 2.15
 Item {
     id: root
 
+    // take
     property TStyleItem styleItem : Style.buttonDefault
     property TStyleItem styleItemDisabled : styleItem
     property TStyleItem styleItemPressed : styleItem
@@ -31,7 +32,7 @@ Item {
         TLabel{
             id: label
             anchors.centerIn: parent
-            styleFont: text.length >= 24 ? Style.size20pxbWhite : styleItemCurrent.fonts[0]
+            styleFont: styleItemCurrent.fonts[0]
         }
     }
 

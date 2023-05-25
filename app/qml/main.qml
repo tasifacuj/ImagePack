@@ -14,7 +14,7 @@ Window {
         warningMessage.visible = true;
     }
 
-    ImageList{
+    TImageList{
         id: images
         width: parent.width
 //        height: 400
@@ -25,21 +25,6 @@ Window {
 
         onSignalItemSelected: {
             cppImgModel.handleClick( idx );
-        }
-    }
-
-    TButton{
-        visible: false
-        enabled: true
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.bottomMargin: 0
-        anchors.leftMargin: 0
-        styleItem: Style.buttonRed
-        styleItemPressed: Style.buttonRedPressed
-        caption: qsTr("Show warning")
-        onSignalClicked: {
-            warningMessage.visible = true;
         }
     }
 
@@ -55,8 +40,6 @@ Window {
             console.log( "msg clicked" );
             visible = false;
         }
-
-
     }
 
     ListModel{
