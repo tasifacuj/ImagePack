@@ -65,4 +65,6 @@ void AppImageTraverser::slotDecode( QString const& filePath ){
         qDebug() << "Failed to save" << unpackedFilePath;
         emit signalStatusDecodeChanged( ERROR, filePath );
     }
+
+    emit signalStatusDecodeChanged( NONE, filePath );
 }
